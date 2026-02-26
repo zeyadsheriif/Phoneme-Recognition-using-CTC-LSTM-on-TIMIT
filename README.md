@@ -72,7 +72,7 @@ Usage & Execution
 
 1.  Bashgit clone https://github.com/yourusername/timit-ctc-lstm.gitcd timit-ctc-lstm
     
-2.  **Run the Notebook:**Open Zeyad.ipynb in Jupyter Notebook, JupyterLab, or Google Colab.
+2.  **Run the Notebook:**Open CTC.ipynb in Jupyter Notebook, JupyterLab, or Google Colab.
     
 3.  **Training:**The notebook will automatically attempt to download the TIMIT dataset via the Kaggle API. It trains for **30 epochs** using the Adam optimizer (LR: 1e-3) with gradient clipping (max norm: 5.0) to stabilize CTC loss.
     
