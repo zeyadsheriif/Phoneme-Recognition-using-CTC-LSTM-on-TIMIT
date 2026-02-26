@@ -88,8 +88,3 @@ Results
     
 *   **Visualizations:** The notebook includes a heatmap visualization of the CTC Alignment Probabilities (Softmax Output) over time frames, highlighting how the model learns to output distinct phoneme spikes separated by blank tokens.
     
-
-Author
-------
-
-**Zeyad Sherif** Developed as part of studies in advanced speech recognition, machine learning algorithms, and coursework for CSAI 498.
