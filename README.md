@@ -1,90 +1,141 @@
-# Phoneme-Recognition-using-CTC-LSTM-on-TIMIT
+# 🎙️ Phoneme Recognition using BiLSTM-CTC on the TIMIT Dataset
 
-Overview
---------
+An end-to-end Automatic Speech Recognition (ASR) system that converts speech into phoneme sequences using Bidirectional Long Short-Term Memory (BiLSTM) networks trained with Connectionist Temporal Classification (CTC) loss. The project is implemented in PyTorch and evaluated on the DARPA TIMIT Acoustic-Phonetic Continuous Speech Corpus.
 
-This repository contains a PyTorch implementation of an Acoustic-Phonetic Continuous Speech Recognizer. The model utilizes a Bidirectional Long Short-Term Memory (BiLSTM) network trained with Connectionist Temporal Classification (CTC) loss to directly map audio features to phoneme sequences.
+---
 
-The project is built and evaluated using the **DARPA TIMIT Acoustic-Phonetic Continuous Speech Corpus** and features custom, from-scratch implementations of CTC decoding algorithms.
+## 🚀 Overview
 
-Key Features
-------------
+This project demonstrates a complete phoneme recognition pipeline, from raw speech preprocessing to sequence decoding.
 
-*   **Automated Data Pipeline:** Integrates kagglehub to automatically download and extract the TIMIT dataset, with a built-in fallback to synthetic data generation for testing/debugging.
-    
-*   **Audio Preprocessing:** Extracts 13 Mel-Frequency Cepstral Coefficients (MFCCs) using torchaudio (Sample rate: 16kHz, n\_fft: 400, hop\_length: 160, n\_mels: 23).
-    
-*   **Phoneme Dictionary:** Maps standard TIMIT phonemes (46 phonemes + token) to integer indices for CTC training.
-    
-*   **Custom Algorithms (From Scratch):**
-    
-    *   **CTC Forward Probability:** Computes the likelihood of a ground truth phoneme sequence given the model's logits.
-        
-    *   **Greedy Decoding:** Fast, argmax-based sequence prediction.
-        
-    *   **Beam Search Decoding:** Explores multiple sequence hypotheses (default beam width = 5) to improve recognition accuracy.
-        
-    *   **Levenshtein Distance:** Custom implementation to calculate Phoneme Error Rate (PER).
-        
+Unlike traditional frame-level classifiers, the model directly learns the alignment between acoustic features and phoneme sequences using CTC, eliminating the need for frame-level annotations.
 
-Model Architecture
-------------------
+Several decoding algorithms were implemented entirely from scratch, providing a deeper understanding of modern speech recognition systems.
 
-The core model is a CTCLSTM built with PyTorch:
+---
 
-*   **Input Dimension:** 13 (N\_MFCC)
-    
-*   **Hidden Dimension:** 128
-    
-*   **RNN Layers:** 2
-    
-*   **Type:** Bidirectional LSTM (bidirectional=True)
-    
-*   **Output Layer:** Linear projection to the vocabulary size (47 classes).
-    
+## ✨ Features
 
-Requirements
-------------
+* Automatic Speech Recognition (ASR)
+* Bidirectional LSTM Acoustic Model
+* Connectionist Temporal Classification (CTC)
+* MFCC Feature Extraction
+* Custom Greedy Decoder
+* Custom Beam Search Decoder
+* Forward Probability Algorithm
+* Phoneme Error Rate (PER) Evaluation
+* Automatic TIMIT Dataset Download
+* Synthetic Dataset Fallback
 
-Ensure you have Python 3.7+ installed. The primary dependencies are:
+---
 
-*   torch
-    
-*   torchaudio
-    
-*   numpy
-    
-*   matplotlib
-    
-*   soundfile
-    
-*   kagglehub
-    
+## 🏗️ System Pipeline
 
-You can install the dependencies via pip:
+```text
+Speech Audio
+      │
+      ▼
+MFCC Feature Extraction
+      │
+      ▼
+Bidirectional LSTM
+      │
+      ▼
+Linear Projection
+      │
+      ▼
+CTC Output Probabilities
+      │
+      ▼
+Greedy / Beam Search Decoder
+      │
+      ▼
+Predicted Phoneme Sequence
+```
 
-Bash
+---
 
-Plain textANTLR4BashCC#CSSCoffeeScriptCMakeDartDjangoDockerEJSErlangGitGoGraphQLGroovyHTMLJavaJavaScriptJSONJSXKotlinLaTeXLessLuaMakefileMarkdownMATLABMarkupObjective-CPerlPHPPowerShell.propertiesProtocol BuffersPythonRRubySass (Sass)Sass (Scss)SchemeSQLShellSwiftSVGTSXTypeScriptWebAssemblyYAMLXML`   pip install torch torchaudio numpy matplotlib soundfile kagglehub   `
+## 🧠 Model Architecture
 
-Usage & Execution
------------------
+* Input Features: 13 MFCC coefficients
+* Bidirectional LSTM
+* 2 Recurrent Layers
+* Hidden Size: 128
+* Fully Connected Output Layer
+* CTC Loss
+* Adam Optimizer
 
-1.  Bashgit clone https://github.com/yourusername/timit-ctc-lstm.gitcd timit-ctc-lstm
-    
-2.  **Run the Notebook:**Open CTC.ipynb in Jupyter Notebook, JupyterLab, or Google Colab.
-    
-3.  **Training:**The notebook will automatically attempt to download the TIMIT dataset via the Kaggle API. It trains for **30 epochs** using the Adam optimizer (LR: 1e-3) with gradient clipping (max norm: 5.0) to stabilize CTC loss.
-    
-4.  **Evaluation:**During evaluation, the model outputs the Likelihood of the Ground Truth, the Target sequence, the Greedy prediction, and the Beam Search prediction.
-    
+---
 
-Results
--------
+## 🛠 Technologies
 
-*   **Training Convergence:** The CTC loss steadily decreases over 30 epochs (from ~0.69 down to ~0.29), demonstrating stable learning.
-    
-*   **Evaluation:** The model achieves an average **Phoneme Error Rate (PER) of ~0.32** on a subset of the test data using Beam Search decoding.
-    
-*   **Visualizations:** The notebook includes a heatmap visualization of the CTC Alignment Probabilities (Softmax Output) over time frames, highlighting how the model learns to output distinct phoneme spikes separated by blank tokens.
-    
+* Python
+* PyTorch
+* Torchaudio
+* NumPy
+* Matplotlib
+* SoundFile
+* KaggleHub
+
+---
+
+## 📂 Project Structure
+
+```text
+Phoneme-Recognition-BiLSTM-CTC/
+│
+├── CTC.ipynb
+├── requirements.txt
+├── README.md
+└── assets/
+```
+
+---
+
+## 🔬 Custom Implementations
+
+Instead of relying solely on library implementations, several core speech recognition algorithms were developed from scratch:
+
+* CTC Forward Probability
+* Greedy Decoding
+* Beam Search Decoding
+* Levenshtein Distance
+* Phoneme Error Rate (PER)
+
+---
+
+## 📊 Results
+
+* Stable CTC convergence over 30 training epochs
+* Average Phoneme Error Rate (PER) ≈ **0.32**
+* Successful phoneme sequence prediction using both Greedy and Beam Search decoding
+* Visualization of CTC alignment probabilities across speech frames
+
+---
+
+## 🎯 Learning Outcomes
+
+* Automatic Speech Recognition
+* Deep Learning
+* Sequence Modeling
+* Bidirectional LSTMs
+* Connectionist Temporal Classification
+* Beam Search
+* Acoustic Modeling
+* Speech Signal Processing
+
+---
+
+## 🚀 Future Improvements
+
+* Replace BiLSTM with Transformer or Conformer architectures
+* Integrate Language Models for decoding
+* Support word-level speech recognition
+* Deploy as a real-time speech recognition API
+* Train on larger multilingual speech datasets
+
+---
+
+## 👨‍💻 Author
+
+**Zeyad Sherif**
